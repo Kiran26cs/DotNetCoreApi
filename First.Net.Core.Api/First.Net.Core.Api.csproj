@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="AppManager">
+      <HintPath>..\AppManager\bin\Debug\netcoreapp2.2\AppManager.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
