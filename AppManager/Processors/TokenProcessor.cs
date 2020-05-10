@@ -13,7 +13,7 @@ namespace AppManager.Processors
         public string createNewWebToken()
         {
             //the secret Key
-            string secretKey = "Hello_secret_key";
+            string secretKey = "Hi_ThiS_is_my_sEcRet_Key";
             //Create symetric key 
             var symetricSecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
             //sign the token

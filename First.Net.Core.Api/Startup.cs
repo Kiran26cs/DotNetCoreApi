@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using AppManager.AppInterfaces;
-using AppManager.Processors;
+using First.Net.Core.Api.InstallServices;
 
 namespace First.Net.Core.Api
 {
@@ -30,32 +19,9 @@ namespace First.Net.Core.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //the secret Key
-            string secretKey = "Hello_secret_key";
-            //Create symetric key 
-            var symetricSecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(op=>
-                {
-                    op.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidateLifetime = true,
-
-                        ValidIssuer = "KiransComputer",
-                        ValidAudience = "someReceiver",
-                        IssuerSigningKey = symetricSecurityKey,
-                        LifetimeValidator = LifeTimeValidatorService
-                    };
-                });
-
-            services.AddTransient<ITokenProcessor, TokenProcessor>();
+            services.InstallJWTAuthParams(Configuration);
+            services.InstallManagerServices();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,15 +39,6 @@ namespace First.Net.Core.Api
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
-
-        private bool LifeTimeValidatorService(DateTime? notBefore, DateTime? expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
-        {
-            if (expires != null)
-            {
-                if (DateTime.Now < expires.Value.ToLocalTime()) return true;
-            }
-            return false;
         }
     }
 }
