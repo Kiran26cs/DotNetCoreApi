@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="AppModels">
+      <HintPath>..\AppModels\bin\Debug\netcoreapp2.2\AppModels.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IdentityModel.Tokens">
       <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.identitymodel.tokens\5.3.0\lib\netstandard2.0\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>

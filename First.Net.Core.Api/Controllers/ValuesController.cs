@@ -9,14 +9,22 @@ namespace First.Net.Core.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles ="SchemeOperator")]
+    [Authorize]
     public class ValuesController : ControllerBase
     {
         // GET api/values
         [HttpGet]
+        [Authorize(Roles = "SchemeOperator")]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return  new string[] { "value1", "value2" };
+            return  Ok("JWT token based simple project");
+        }
+
+        [HttpGet]
+        [Route("CommonEndpoint")]
+        public ActionResult<IEnumerable<string>> CommonEndpoint()
+        {
+            return Ok("This could be accessed by any roles");
         }
 
     }

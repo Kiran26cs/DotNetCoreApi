@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using AppManager.Processors;
 using AppManager.AppInterfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using AppModels.ConfigModels;
 
 namespace First.Net.Core.Api.Controllers
 {
@@ -17,13 +20,15 @@ namespace First.Net.Core.Api.Controllers
     public class AuthController : ControllerBase
     {
         private ITokenProcessor itokenprocessor;
-        public AuthController(ITokenProcessor itokenprocessor)
+        private JWTConfiguration jwtConfiguration;
+        public AuthController(ITokenProcessor itokenprocessor, IOptions<JWTConfiguration> jwtConfiguration)
         {
             this.itokenprocessor = itokenprocessor;
+            this.jwtConfiguration = jwtConfiguration.Value;
         }
         public IActionResult Post()
         {
-            return Ok(itokenprocessor.createNewWebToken());
+            return Ok(itokenprocessor.createNewWebToken(jwtConfiguration));
         }
     }
 }

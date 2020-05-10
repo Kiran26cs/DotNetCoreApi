@@ -15,6 +15,9 @@
     <Reference Include="AppManager">
       <HintPath>..\AppManager\bin\Debug\netcoreapp2.2\AppManager.dll</HintPath>
     </Reference>
+    <Reference Include="AppModels">
+      <HintPath>..\AppModels\bin\Debug\netcoreapp2.2\AppModels.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
