@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using AppManager.AppInterfaces;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +20,17 @@ namespace AppManager.Processors
             var signingCredentails = new SigningCredentials(symetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
             //Create the token
 
-            var token = new JwtSecurityToken(issuer: "KiransComputer", audience: "someReceiver", expires: DateTime.Now.AddMinutes(1), signingCredentials: signingCredentails);
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Role, "SchemeOperator")
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: "KiransComputer", 
+                audience: "someReceiver", 
+                expires: DateTime.Now.AddMinutes(1), 
+                signingCredentials: signingCredentails, 
+                claims: claims);
 
 
             //write the token

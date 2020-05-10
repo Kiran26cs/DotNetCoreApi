@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using AppManager.AppInterfaces;
+using AppManager.Processors;
 
 namespace First.Net.Core.Api
 {
@@ -50,7 +52,10 @@ namespace First.Net.Core.Api
                         LifetimeValidator = LifeTimeValidatorService
                     };
                 });
+
+            services.AddTransient<ITokenProcessor, TokenProcessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -9,7 +9,7 @@ namespace First.Net.Core.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles ="SchemeOperator")]
     public class ValuesController : ControllerBase
     {
         // GET api/values
